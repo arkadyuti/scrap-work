@@ -1,0 +1,44 @@
+<html>
+<script src="/dist/minified/scripts/jquery-3.1.0.js" ></script>
+    <body>
+        <form ref='uploadForm' id='uploadForm' action='/upload' method='post' encType="multipart/form-data">
+                <input type="file" name="sampleFile" />
+                <input type='submit' value='Upload!' />
+        </form>	
+
+	<form name="photo" id="imageUploadForm" enctype="multipart/form-data" method="post">
+	    <input type="file" id="ImageBrowse" name="sampleFile" size="30"/>
+	    <input type="submit" name="upload" value="Upload" />
+	   
+	</form>
+	<img  alt="">
+    </body>
+    <script type="text/javascript">
+    	$(document).ready(function (e) {
+    		$("img").attr('src', '/dist/'+ $.cookie('superviseeID') +'.jpg');;
+		    $('#imageUploadForm').on('submit',(function(e) {
+		        e.preventDefault();
+		        var formData = new FormData(this);
+
+		        $.ajax({
+		            type:'POST',
+		            url: "/upload",
+		            data:formData,
+		            cache:false,
+		            contentType: false,
+		            processData: false,
+		            success:function(data){
+		                console.log("success");
+		                console.log(data);
+		            },
+		            error: function(data){
+		                console.log("error");
+		                console.log(data);
+		            }
+		        });
+		    }));
+		    
+    
+});
+    </script>
+</html>
